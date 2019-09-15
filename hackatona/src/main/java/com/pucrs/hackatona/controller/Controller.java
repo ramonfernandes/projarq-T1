@@ -17,7 +17,7 @@ public class Controller {
     @Autowired
     private UsuarioService service;
 
-    @GetMapping("/alunos")
+    @GetMapping("/usuarios")
     public ResponseEntity get(@RequestParam(required = false) String nome,
                               @RequestParam(required = false) String curso) {
         List<Usuario> list = service.get();
@@ -26,7 +26,13 @@ public class Controller {
         if(curso != null)
             list = service.getByCurso(list, curso);
         return ResponseEntity.ok(gson.toJson(list, List.class));
+    }
 
+    @GetMapping("/alunos")
+    public ResponseEntity get() {
+        List<Usuario> list = service.get();
+        list = service.getAlunos(list);
+        return ResponseEntity.ok(gson.toJson(list, List.class));
     }
 
 }

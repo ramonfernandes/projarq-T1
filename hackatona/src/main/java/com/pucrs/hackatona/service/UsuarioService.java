@@ -33,4 +33,27 @@ public class UsuarioService {
                 .filter(usuario -> usuario.isCurso(curso))
                 .collect(Collectors.toList());
     }
+
+    public Boolean confirmLogin(List<Usuario> list, String email, String senha) throws IllegalArgumentException {
+            for(Usuario u: list){
+                if(u.isLogin(email, senha)){
+                    return true;
+                }
+            }
+        return false;
+    }
+
+    public List<Usuario> getAlunos(List<Usuario> list) {
+        return list
+                .stream()
+                .filter(Usuario::isAluno)
+                .collect(Collectors.toList());
+    }
+
+    public List<Usuario> getProfessores(List<Usuario> list) {
+        return list
+                .stream()
+                .filter(Usuario::isProfessor)
+                .collect(Collectors.toList());
+    }
 }

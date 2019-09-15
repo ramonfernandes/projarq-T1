@@ -44,6 +44,8 @@ public class Usuario {
 
     public boolean isAluno() { return aluno; }
 
+    public boolean isProfessor() { return !aluno; }
+
     public boolean isLogin(String compareEmail, String compareSenha) { return email.equals(compareEmail) && senha.equals(compareSenha); }
 
 
