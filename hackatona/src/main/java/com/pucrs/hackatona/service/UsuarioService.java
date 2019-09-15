@@ -1,7 +1,7 @@
 package com.pucrs.hackatona.service;
 
-import com.pucrs.hackatona.beans.Aluno;
-import com.pucrs.hackatona.dao.AlunoDAO;
+import com.pucrs.hackatona.beans.Usuario;
+import com.pucrs.hackatona.dao.UsuarioDAO;
 import com.pucrs.hackatona.enumerator.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,27 +10,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AlunoService {
+public class UsuarioService {
 
     @Autowired
-    private AlunoDAO dao;
+    private UsuarioDAO dao;
 
-    public List<Aluno> get() {
+    public List<Usuario> get() {
         return dao.get();
     }
 
-    public List<Aluno> getByNome(List<Aluno> list, String nome) {
+    public List<Usuario> getByNome(List<Usuario> list, String nome) {
         return list
                 .stream()
-                .filter(aluno -> aluno.isName(nome))
+                .filter(usuario -> usuario.isName(nome))
                 .collect(Collectors.toList());
     }
 
-    public List<Aluno> getByCurso(List<Aluno> list, String cursoName) throws IllegalArgumentException {
+    public List<Usuario> getByCurso(List<Usuario> list, String cursoName) throws IllegalArgumentException {
         Curso curso = Curso.valueOf(cursoName);
         return list
                 .stream()
-                .filter(aluno -> aluno.isCurso(curso))
+                .filter(usuario -> usuario.isCurso(curso))
                 .collect(Collectors.toList());
     }
 }
