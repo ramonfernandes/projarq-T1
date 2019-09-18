@@ -10,17 +10,21 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class Aluno {
+public class Pessoa {
 
     @JsonIgnore
     private UUID id;
     private String nome;
     private Curso curso;
+    private String matricula;
+    private boolean isProfessor;
 
-    public Aluno(String nome, Curso curso) {
+    public Pessoa(String nome, Curso curso, String matricula, boolean isProfessor) {
         this.id = UUID.randomUUID();
         this.nome = nome;
         this.curso = curso;
+        this.matricula = matricula;
+        this.isProfessor = isProfessor;
     }
 
     public boolean isName(String compareNome) {
@@ -30,4 +34,13 @@ public class Aluno {
     public boolean isCurso(Curso compareCurso) {
         return curso.equals(compareCurso);
     }
+
+    public boolean isMatricula(String compareMatricula) {
+        return matricula.equals(compareMatricula);
+    }
+
+    public boolean isProfessor() {
+        return isProfessor;
+    }
+
 }

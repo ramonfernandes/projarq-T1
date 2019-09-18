@@ -1,34 +1,46 @@
 package com.pucrs.hackatona.dao;
 
-import com.pucrs.hackatona.beans.Aluno;
+import com.google.gson.reflect.TypeToken;
+import com.pucrs.hackatona.beans.Pessoa;
 import com.pucrs.hackatona.enumerator.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import com.google.gson.Gson;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AlunoDAO {
 
-    private List<Aluno> alunoList;
+    @Autowired
+    Gson gson;
+    private List<Pessoa> alunoList;
+    private FileReader fileReader;
 
     public AlunoDAO() {
-        this.alunoList = new ArrayList<Aluno>(){{
-            add(new Aluno("Ramon", Curso.ES));
-            add(new Aluno("João", Curso.ES));
-            add(new Aluno("Pedro", Curso.CC));
-            add(new Aluno("Matheus", Curso.CC));
-            add(new Aluno("Judas", Curso.EC));
-            add(new Aluno("José", Curso.EC));
-            add(new Aluno("Paulo", Curso.SI));
-            add(new Aluno("Maria", Curso.SI));
-        }};
+//        this.alunoList = new ArrayList<Pessoa>(){{
+//            add(new Pessoa("Ramon", Curso.ES));
+//            add(new Pessoa("João", Curso.ES));
+//            add(new Pessoa("Pedro", Curso.CC));
+//            add(new Pessoa("Matheus", Curso.CC));
+//            add(new Pessoa("Judas", Curso.EC));
+//            add(new Pessoa("José", Curso.EC));
+//            add(new Pessoa("Paulo", Curso.SI));
+//            add(new Pessoa("Maria", Curso.SI));
+//        }};
+        try {
+            fileReader = new FileReader("./data/pessoas.json");
+            this.alunoList = gson.fromJson(fileReader,  new TypeToken<ArrayList<Pessoa>>() {}.getType());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public List<Aluno> get() {
+    public List<Pessoa> get() {
         return alunoList;
     }
 }
