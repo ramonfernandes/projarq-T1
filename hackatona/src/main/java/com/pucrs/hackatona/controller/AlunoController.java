@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController(value = "/hackatona")
-public class Controller {
+@RestController(value = "/aluno")
+public class AlunoController {
 
     @Autowired
     Gson gson;
