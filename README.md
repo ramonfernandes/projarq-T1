@@ -10,51 +10,104 @@
     - Avaliar times
   
 ## API ENDPOINTS
+### ALUNO
 
-**Logar**
+   **Login**
 
-  - /login 
-  
+  - GET /aluno/login?matricula=matricula&senha=senha 
+   
+---
+
+   **Cadastrar usuario**
+
+  - POST /aluno/cadastrar
+    
    ```javascript
    {
-    "usuario" : "" ,
-    "senha" : ""
+    "nome" : String,
+    "matricula" : String,
+    "senha": String,
+    "curso": String,
+    "isAluno": Boolean
    }
    ```
    
-   **Listar alunos**
-  - GET /alunos
+---
 
+   **Listar Usuários**
+   
+  - GET /aluno/usuarios?nome=nome&curso=curso&matricula=matricula
 
-   **Time**
-  - GET /times/:id
+---
+
+### TIME
+
+  **Listar times**
   
-  __________________
+  - GET /time
 
-  
-  - POST /times
+---
+
+   **Cadastrar time**
+  - POST /time
   
    ```javascript
-   {
-    "alunos" : [] ,
-    "nomeEquipe" : ""
-   }
+   [
+      {
+         "nome" : String,
+         "matricula" : String,
+         "senha": String,
+         "curso": String,
+         "isAluno": Boolean
+      }
+   ]
    ```
 
-  __________________
+  ---
  
   
-  - DELETE /times/:id
+  **Atualizar time**
+  - POST /time/:id
+  
+   ```javascript
+   [
+      {
+         "nome" : String,
+         "matricula" : String,
+         "senha": String,
+         "curso": String,
+         "isAluno": Boolean
+      }
+   ]
+   ```
 
-  __________________
+---
 
-  - PATCH /times/:id
-   
+  **Buscar time**
+  - GET /time/:id
+
+
+---
+
+  **Buscar time por alunos**
+  - GET /time/timeByAlunos
    ```javascript
    {
-    "id": 0,
-    "alunos" : [] ,
-    "nomeEquipe" : ""
+      "matriculas": [String]
+   }
+   ```
+
+---
+
+  **Avaliar time**
+  - POST /time/:id
+   ```javascript
+   {
+      "funcionamento": Number,
+      "inovacao": Number,
+      "pitch": Number,
+      "processo": Number,
+      "time": Number
    }
    ```
    

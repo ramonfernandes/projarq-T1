@@ -50,11 +50,6 @@ public class TimeController {
         }
     }
 
-    @GetMapping()
-    public ResponseEntity get() {
-        return ResponseEntity.ok(timeService.getAll());
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") int id) {
         try {
