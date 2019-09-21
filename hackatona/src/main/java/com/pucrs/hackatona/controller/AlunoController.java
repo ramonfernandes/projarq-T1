@@ -15,9 +15,9 @@ public class AlunoController {
     @Autowired
     Gson gson;
     @Autowired
-    private AlunoService service;
+    private UsuarioService service;
 
-    @GetMapping()
+    @GetMapping("/usuarios")
     public ResponseEntity get(@RequestParam(required = false) String nome,
                               @RequestParam(required = false) String curso,
                               @RequestParam(required = false) String matricula) {
@@ -26,6 +26,13 @@ public class AlunoController {
             list = service.getByNome(list, nome);
         if(curso != null)
             list = service.getByCurso(list, curso);
+        return ResponseEntity.ok(gson.toJson(list, List.class));
+    }
+
+    @GetMapping("/alunos")
+    public ResponseEntity get() {
+        List<Usuario> list = service.get();
+        list = service.getAlunos(list);
         if(matricula != null)
             list = service.getByMatricula(list, matricula);
 
