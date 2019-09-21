@@ -1,17 +1,25 @@
 package com.pucrs.hackatona.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Time {
 
+    @JsonIgnore
     private int id;
+    @JsonIgnore
     private static int idAux = 0;
-    List<Aluno> alunos;
+    private List<Usuario> usuarios;
+    @JsonIgnore
+    private Nota nota;
+    @JsonIgnore
     private boolean isApproved;
 
-    public Time(List<Aluno> alunos) {
+    public Time(List<Usuario> usuarios) {
         this.id = idAux;
-        this.alunos = alunos;
+        this.usuarios = usuarios;
         this.isApproved = false;
         idAux++;
     }
@@ -32,12 +40,22 @@ public class Time {
         Time.idAux = idAux;
     }
 
-    public List<Aluno> getAlunos() {
-        return alunos;
+    public List<Usuario> getUsuarios() {
+        return usuarios;
     }
 
-    public void setAlunos(List<Aluno> alunos) {
-        this.alunos = alunos;
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public List<String> getMatriculas() {
+        return usuarios.stream()
+                .map(Usuario::getMatricula)
+                .collect(Collectors.toList());
+    }
+
+    public boolean containsMatricula(String matricula) {
+        return getMatriculas().contains(matricula);
     }
 
     public boolean isApproved() {
@@ -46,5 +64,10 @@ public class Time {
 
     public void setApproved(boolean approved) {
         isApproved = approved;
+    }
+
+    public Time setNota(Nota nota) {
+        this.nota = nota;
+        return this;
     }
 }

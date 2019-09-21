@@ -1,35 +1,37 @@
 package com.pucrs.hackatona.beans;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pucrs.hackatona.enumerator.Curso;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Bean;
-import sun.security.util.Password;
 
-import java.util.UUID;
-
-@Data
-@NoArgsConstructor
 public class Usuario {
 
-    @JsonIgnore
-    private UUID id;
-    private String email;
     private String senha;
     private String matricula;
     private String nome;
     private Curso curso;
-    private Boolean aluno;
+    private Boolean isAluno;
 
-    public Usuario(String email, String senha, String nome, Curso curso, Boolean aluno) {
-        this.id = UUID.randomUUID();
-        this.email = email;
+    public Usuario(String matricula, String senha, String nome, Curso curso, Boolean isAluno) {
         this.senha = senha;
-        this.aluno = aluno;
+        this.isAluno = isAluno;
         this.matricula = matricula;
         this.nome = nome;
         this.curso = curso;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public Boolean getAluno() {
+        return isAluno;
+    }
+
+    public void setIsAluno(Boolean isAluno) {
+        this.isAluno = isAluno;
     }
 
     public boolean isName(String compareNome) {
@@ -44,23 +46,21 @@ public class Usuario {
         return curso.equals(compareCurso);
     }
 
-    public boolean isAluno() { return aluno; }
+    public boolean getIsAluno() {
+        return isAluno;
+    }
 
-    public boolean isProfessor() { return !aluno; }
+    public boolean isProfessor() {
+        return !isAluno;
+    }
 
-    public boolean isLogin(String compareEmail, String compareSenha) { return email.equals(compareEmail) && senha.equals(compareSenha); }
-
+    public boolean isLogin(String compareMatricula, String compareSenha) {
+        return matricula.equals(compareMatricula)
+                && senha.equals(compareSenha);
+    }
 
     public boolean isMatricula(String compareMatricula) {
         return matricula.equals(compareMatricula);
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getMatricula() {

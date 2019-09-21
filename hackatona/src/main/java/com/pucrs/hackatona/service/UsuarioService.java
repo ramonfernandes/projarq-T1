@@ -1,5 +1,6 @@
 package com.pucrs.hackatona.service;
 
+import com.pucrs.hackatona.beans.LoginObject;
 import com.pucrs.hackatona.beans.Usuario;
 import com.pucrs.hackatona.dao.UsuarioDAO;
 import com.pucrs.hackatona.enumerator.Curso;
@@ -34,19 +35,19 @@ public class UsuarioService {
                 .collect(Collectors.toList());
     }
 
-    public Boolean confirmLogin(List<Usuario> list, String email, String senha) throws IllegalArgumentException {
-            for(Usuario u: list){
-                if(u.isLogin(email, senha)){
-                    return true;
-                }
+    public LoginObject confirmLogin(String matricula, String senha) throws IllegalArgumentException {
+        for (Usuario u : get()) {
+            if (u.isLogin(matricula, senha)) {
+                return new LoginObject(matricula, u.getIsAluno());
             }
-        return false;
+        }
+        throw new IllegalArgumentException();
     }
 
     public List<Usuario> getAlunos(List<Usuario> list) {
         return list
                 .stream()
-                .filter(Usuario::isAluno)
+                .filter(Usuario::getIsAluno)
                 .collect(Collectors.toList());
     }
 
@@ -55,5 +56,32 @@ public class UsuarioService {
                 .stream()
                 .filter(Usuario::isProfessor)
                 .collect(Collectors.toList());
+    }
+
+    public List<Usuario> getByMatricula(List<Usuario> list, String matricula) {
+        return list
+                .stream()
+                .filter(usuario -> usuario.isMatricula(matricula))
+                .collect(Collectors.toList());
+    }
+
+    public boolean existUsuario(String matricula) {
+        return getByMatricula(get(), matricula).size() > 0;
+    }
+
+    public boolean allUsuariosExist(List<Usuario> usuarios) {
+        for (Usuario usuario : usuarios) {
+            if (!existUsuario(usuario.getMatricula()))
+                return false;
+        }
+        return true;
+    }
+
+    public void createUsuario(Usuario usuario) {
+        if (!existUsuario(usuario.getMatricula())) {
+            dao.create(usuario);
+        }else {
+            throw new IllegalArgumentException();
+        }
     }
 }

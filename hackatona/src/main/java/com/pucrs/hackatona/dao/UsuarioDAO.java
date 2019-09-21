@@ -15,18 +15,22 @@ public class UsuarioDAO {
     //(String email, String senha, String nome, Curso curso, Boolean aluno
     public UsuarioDAO() {
         this.usuarioList = new ArrayList<Usuario>(){{
-            add(new Usuario("ramon@email.com","senha1", "Ramon Fernandes", Curso.ES,true));
-            add(new Usuario("joao@email.com","senha2", "João Da Silva", Curso.EC,false));
-            add(new Usuario("ramiro@email.com","senha3", "Ramiro Araujo", Curso.ES,true));
-            add(new Usuario("valdisnei@email.com","senha4", "Valdisnei Fernandes", Curso.CC,false));
-            add(new Usuario("vitoria@email.com","senha5", "Vitoria Da Silva", Curso.CC,true));
-            add(new Usuario("pereira@email.com","senha6", "Arnaldo Pererira", Curso.CC,true));
-            add(new Usuario("eliza@email.com","senha7", "Eliza Lopes", Curso.SI,true));
-            add(new Usuario("mario@email.com","senha8", "Mario Costa", Curso.SI,true));
+            add(new Usuario("1111111111", "senha1", "Ramon Fernandes", Curso.ES,true));
+            add(new Usuario("1111111112", "senha2", "João Da Silva", Curso.EC,false));
+            add(new Usuario("1111111113", "senha3", "Ramiro Araujo", Curso.ES,true));
+            add(new Usuario("1111111114", "senha4", "Valdisnei Fernandes", Curso.CC,false));
+            add(new Usuario("1111111115", "senha5", "Vitoria Da Silva", Curso.CC,true));
+            add(new Usuario("1111111116", "senha6", "Arnaldo Pererira", Curso.CC,true));
+            add(new Usuario("1111111117", "senha7", "Eliza Lopes", Curso.SI,true));
+            add(new Usuario("1111111118", "senha8", "Mario Costa", Curso.SI,true));
         }};
     }
 
     public List<Usuario> get() {
         return usuarioList;
+    }
+
+    public void create(Usuario usuario) {
+        usuarioList.add(usuario);
     }
 }
