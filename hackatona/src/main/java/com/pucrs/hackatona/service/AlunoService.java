@@ -26,6 +26,13 @@ public class AlunoService {
                 .collect(Collectors.toList());
     }
 
+    public List<Aluno> getByMatricula(List<Aluno> list, String matricula) {
+        return list
+                .stream()
+                .filter(aluno -> aluno.isMatricula(matricula))
+                .collect(Collectors.toList());
+    }
+    
     public List<Pessoa> getByCurso(List<Pessoa> list, String cursoName) throws IllegalArgumentException {
         Curso curso = Curso.valueOf(cursoName);
         return list
@@ -48,4 +55,15 @@ public class AlunoService {
                 .collect(Collectors.toList());
     }
 
+    public boolean existAluno(String matricula) {
+        return getByMatricula(get(), matricula).size() > 0;
+    }
+
+    public boolean allAlunosExist(List<Aluno> alunos) {
+        for (Aluno aluno: alunos) {
+            if(!existAluno(aluno.getMatricula()))
+                return false;
+        }
+        return true;
+    }
 }

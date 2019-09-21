@@ -14,13 +14,15 @@ public class Pessoa {
 
     @JsonIgnore
     private UUID id;
+    private String matricula;
     private String nome;
     private Curso curso;
     private String matricula;
     private boolean isProfessor;
 
-    public Pessoa(String nome, Curso curso, String matricula, boolean isProfessor) {
-        this.id = UUID.randomUUID();
+    public Aluno(UUID id, String matricula, String nome, Curso curso) {
+        this.id = id;
+        this.matricula = matricula;
         this.nome = nome;
         this.curso = curso;
         this.matricula = matricula;
@@ -43,4 +45,35 @@ public class Pessoa {
         return isProfessor;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
 }
