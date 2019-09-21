@@ -8,21 +8,25 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.UUID;
 
-//@Data
-//@NoArgsConstructor
-public class Aluno {
+@Data
+@NoArgsConstructor
+public class Pessoa {
 
     @JsonIgnore
     private UUID id;
     private String matricula;
     private String nome;
     private Curso curso;
+    private String matricula;
+    private boolean isProfessor;
 
     public Aluno(UUID id, String matricula, String nome, Curso curso) {
         this.id = id;
         this.matricula = matricula;
         this.nome = nome;
         this.curso = curso;
+        this.matricula = matricula;
+        this.isProfessor = isProfessor;
     }
 
     public boolean isName(String compareNome) {
@@ -35,6 +39,10 @@ public class Aluno {
 
     public boolean isMatricula(String compareMatricula) {
         return matricula.equals(compareMatricula);
+    }
+
+    public boolean isProfessor() {
+        return isProfessor;
     }
 
     public UUID getId() {
