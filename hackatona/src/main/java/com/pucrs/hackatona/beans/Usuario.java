@@ -17,6 +17,7 @@ public class Usuario {
     private UUID id;
     private String email;
     private String senha;
+    private String matricula;
     private String nome;
     private Curso curso;
     private Boolean aluno;
@@ -26,6 +27,7 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
         this.aluno = aluno;
+        this.matricula = matricula;
         this.nome = nome;
         this.curso = curso;
     }
@@ -49,4 +51,39 @@ public class Usuario {
     public boolean isLogin(String compareEmail, String compareSenha) { return email.equals(compareEmail) && senha.equals(compareSenha); }
 
 
+    public boolean isMatricula(String compareMatricula) {
+        return matricula.equals(compareMatricula);
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
 }
