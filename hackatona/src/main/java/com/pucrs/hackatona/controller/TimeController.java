@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController(value = "/time")
+@RestController
+@RequestMapping("/time")
 public class TimeController {
 
     @Autowired
@@ -59,7 +60,7 @@ public class TimeController {
         }
     }
 
-    @GetMapping("/timeByAlunos")
+    @PostMapping("/timeByAlunos")
     public ResponseEntity getTimeByAlunos(@RequestBody List<String> matriculas) {
         return ResponseEntity.ok(timeService.getByMatriculas(matriculas));
     }

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController(value = "/aluno")
+@RestController
+@RequestMapping("/aluno")
 public class UsuarioController {
 
     @Autowired

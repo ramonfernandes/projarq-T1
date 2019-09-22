@@ -92,9 +92,7 @@
   **Buscar time por alunos**
   - GET /time/timeByAlunos
    ```javascript
-   {
-      "matriculas": [String]
-   }
+   [String]
    ```
 
 ---
@@ -107,7 +105,8 @@
       "inovacao": Number,
       "pitch": Number,
       "processo": Number,
-      "time": Number
+      "time": Number,
+      "timeId":Number
    }
    ```
    

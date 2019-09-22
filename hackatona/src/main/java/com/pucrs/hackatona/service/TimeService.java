@@ -4,6 +4,7 @@ import com.pucrs.hackatona.beans.Nota;
 import com.pucrs.hackatona.beans.Usuario;
 import com.pucrs.hackatona.beans.Time;
 import com.pucrs.hackatona.dao.TimeDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class TimeService {
 
+    @Autowired
     private TimeDao timeDao;
 
     public boolean validateTime(List<Usuario> usuarios) {
