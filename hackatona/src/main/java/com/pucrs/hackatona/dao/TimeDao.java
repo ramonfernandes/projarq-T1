@@ -13,8 +13,8 @@ public class TimeDao {
 
     List<Time> times = new ArrayList<Time>();
 
-    public void createTeam(List<Usuario> usuarios) {
-        times.add(new Time(usuarios));
+    public void createTeam(Time time) {
+        times.add(time);
     }
 
     public List<Time> getAll() {

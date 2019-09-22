@@ -31,9 +31,9 @@ public class TimeController {
     }
 
     @PostMapping()
-    public ResponseEntity post(@RequestBody List<Usuario> list) {
-        if (usuarioService.allUsuariosExist(list) && timeService.validateTime(list)) {
-            timeService.createTeam(list);
+    public ResponseEntity post(@RequestBody Time time) {
+        if (usuarioService.allUsuariosExist(time.getAlunos()) && timeService.validateTime(time.getAlunos())) {
+            timeService.createTeam(time);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().build();

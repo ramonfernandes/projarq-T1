@@ -26,8 +26,8 @@ public class TimeService {
         return false;
     }
 
-    public void createTeam(List<Usuario> usuarios) {
-        timeDao.createTeam(usuarios);
+    public void createTeam(Time time) {
+        timeDao.createTeam(time);
     }
 
     public List<Time> getAll() {

@@ -11,15 +11,17 @@ public class Time {
     private int id;
     @JsonIgnore
     private static int idAux = 0;
-    private List<Usuario> usuarios;
+    private String nome;
+    private List<Usuario> alunos;
     @JsonIgnore
     private Nota nota;
     @JsonIgnore
     private boolean isApproved;
 
-    public Time(List<Usuario> usuarios) {
+    public Time(String nome, List<Usuario> alunos) {
         this.id = idAux;
-        this.usuarios = usuarios;
+        this.nome = nome;
+        this.alunos = alunos;
         this.isApproved = false;
         idAux++;
     }
@@ -40,16 +42,16 @@ public class Time {
         Time.idAux = idAux;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public List<Usuario> getAlunos() {
+        return alunos;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public void setAlunos(List<Usuario> alunos) {
+        this.alunos = alunos;
     }
 
     public List<String> getMatriculas() {
-        return usuarios.stream()
+        return alunos.stream()
                 .map(Usuario::getMatricula)
                 .collect(Collectors.toList());
     }
@@ -69,5 +71,13 @@ public class Time {
     public Time setNota(Nota nota) {
         this.nota = nota;
         return this;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }
