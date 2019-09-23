@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Time {
 
-    @JsonIgnore
+
     private int id;
     @JsonIgnore
     private static int idAux = 0;

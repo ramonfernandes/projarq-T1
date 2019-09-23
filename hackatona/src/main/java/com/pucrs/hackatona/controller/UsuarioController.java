@@ -36,7 +36,7 @@ public class UsuarioController {
     public ResponseEntity login(@RequestParam(required = false) String matricula,
                                 @RequestParam(required = false) String senha) {
         try {
-            ResponseEntity.ok(service.confirmLogin(matricula, senha));
+           ResponseEntity.ok(service.confirmLogin(matricula, senha));
         } catch (IllegalArgumentException e) {
             ResponseEntity.badRequest().build();
         }
