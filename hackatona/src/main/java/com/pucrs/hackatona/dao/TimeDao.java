@@ -25,4 +25,13 @@ public class TimeDao {
         times.remove(oldTime);
         times.add(newTime);
     }
+    public void updateNota(Time time, Nota nota) {
+        for(Time t : times){
+            if (t.getId() == time.getId()){
+                t.setNota(nota);
+            }
+        }
+
+    }
+
 }

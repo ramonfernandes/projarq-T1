@@ -42,10 +42,9 @@ public class TimeService {
     }
 
     public void updateTime(int id, Time time) {
-        if (time.getId() == id) {
             Time oldTime = getTeamById(id);
             timeDao.updateTime(oldTime, time);
-        }
+
     }
 
     public List<Time> getByMatriculas(List<String> matriculas){
@@ -59,6 +58,6 @@ public class TimeService {
     }
 
     public void updateNota(Time time, Nota nota) {
-        timeDao.updateTime(time, time.setNota(nota));
+        timeDao.updateNota(time, nota);
     }
 }

@@ -9,13 +9,12 @@ public class Time {
 
 
     private int id;
-    @JsonIgnore
+
     private static int idAux = 0;
     private String nome;
     private List<Usuario> alunos;
-    @JsonIgnore
     private Nota nota;
-    @JsonIgnore
+
     private boolean isApproved;
 
     public Time(String nome, List<Usuario> alunos) {
@@ -71,6 +70,10 @@ public class Time {
     public Time setNota(Nota nota) {
         this.nota = nota;
         return this;
+    }
+
+    public Nota getNota() {
+        return this.nota;
     }
 
     public String getNome() {
