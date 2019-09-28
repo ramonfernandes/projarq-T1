@@ -1,7 +1,7 @@
 # projarq-T1
 
 
-[Front](https://github.com/mrRodrigo/hackatona-front)
+[Front e screenhots](https://github.com/mrRodrigo/hackatona-front)
 
 
 ## Perfis de acesso
