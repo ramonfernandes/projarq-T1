@@ -2,6 +2,7 @@ package com.pucrs.hackatona.service;
 
 import com.pucrs.hackatona.beans.LoginObject;
 import com.pucrs.hackatona.beans.UsuarioDTO;
+import com.pucrs.hackatona.dao.DAO;
 import com.pucrs.hackatona.dao.UsuarioDAO;
 import com.pucrs.hackatona.enumerator.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,16 @@ import java.util.stream.Collectors;
 public class UsuarioService {
 
     @Autowired
-    private UsuarioDAO dao;
+    private DAO dao;
 
-    public List<UsuarioDTO> get() {
-        return dao.get();
+    public List<UsuarioDTO> getUsuario() {
+        return dao.getUsuario().stream()
+                .map(usuario -> new UsuarioDTO(usuario.getNome(),
+                        usuario.getSenha(),
+                        usuario.getNome(),
+                        usuario.getCurso(),
+                        usuario.getAluno()))
+                .collect(Collectors.toList());
     }
 
     public List<UsuarioDTO> getByNome(List<UsuarioDTO> list, String nome) {
@@ -36,7 +43,7 @@ public class UsuarioService {
     }
 
     public LoginObject confirmLogin(String matricula, String senha) throws IllegalArgumentException {
-        for (UsuarioDTO u : get()) {
+        for (UsuarioDTO u : getUsuario()) {
             if (u.isLogin(matricula, senha)) {
                 return new LoginObject(matricula, u.getIsAluno());
             }
@@ -66,7 +73,7 @@ public class UsuarioService {
     }
 
     public boolean existUsuario(String matricula) {
-        return getByMatricula(get(), matricula).size() > 0;
+        return getByMatricula(getUsuario(), matricula).size() > 0;
     }
 
     public boolean allUsuariosExist(List<UsuarioDTO> usuarioDTOS) {
@@ -79,8 +86,14 @@ public class UsuarioService {
 
     public void createUsuario(UsuarioDTO usuarioDTO) {
         if (!existUsuario(usuarioDTO.getMatricula())) {
-            dao.create(usuarioDTO);
-        }else {
+            dao.create(new UsuarioDAO.Builder()
+                    .nome(usuarioDTO.getNome())
+                    .senha(usuarioDTO.getSenha())
+                    .curso(usuarioDTO.getCurso())
+                    .matricula(usuarioDTO.getMatricula())
+                    .isAluno(usuarioDTO.getIsAluno())
+                    .build());
+        } else {
             throw new IllegalArgumentException();
         }
     }

@@ -2,10 +2,12 @@ package com.pucrs.hackatona.dao;
 
 import com.pucrs.hackatona.beans.Nota;
 import com.pucrs.hackatona.beans.Time;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class DAO {
 
 
@@ -22,7 +24,7 @@ public class DAO {
     public void updateNota(Time time, Nota nota) {
     }
 
-    public List<UsuarioDAO> get() {
+    public List<UsuarioDAO> getUsuario() {
         return new ArrayList<UsuarioDAO>();
     }
 

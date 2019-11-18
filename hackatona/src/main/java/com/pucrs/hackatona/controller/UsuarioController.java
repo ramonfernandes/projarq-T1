@@ -22,7 +22,7 @@ public class UsuarioController {
     public ResponseEntity get(@RequestParam(required = false) String nome,
                               @RequestParam(required = false) String curso,
                               @RequestParam(required = false) String matricula) {
-        List<UsuarioDTO> list = service.get();
+        List<UsuarioDTO> list = service.getUsuario();
         if (nome != null)
             list = service.getByNome(list, nome);
         if (curso != null)

@@ -59,4 +59,44 @@ public class UsuarioDAO {
             return new UsuarioDAO(this);
         }
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+    public Boolean getAluno() {
+        return isAluno;
+    }
+
+    public void setAluno(Boolean aluno) {
+        isAluno = aluno;
+    }
 }
