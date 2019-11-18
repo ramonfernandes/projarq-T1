@@ -1,7 +1,7 @@
 package com.pucrs.hackatona.controller;
 
 import com.google.gson.Gson;
-import com.pucrs.hackatona.beans.Usuario;
+import com.pucrs.hackatona.beans.UsuarioDTO;
 import com.pucrs.hackatona.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class UsuarioController {
     public ResponseEntity get(@RequestParam(required = false) String nome,
                               @RequestParam(required = false) String curso,
                               @RequestParam(required = false) String matricula) {
-        List<Usuario> list = service.get();
+        List<UsuarioDTO> list = service.get();
         if (nome != null)
             list = service.getByNome(list, nome);
         if (curso != null)
@@ -44,9 +44,9 @@ public class UsuarioController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity cadastrar(@RequestBody Usuario usuario) {
+    public ResponseEntity cadastrar(@RequestBody UsuarioDTO usuarioDTO) {
         try {
-            service.createUsuario(usuario);
+            service.createUsuario(usuarioDTO);
             ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
             ResponseEntity.badRequest().build();

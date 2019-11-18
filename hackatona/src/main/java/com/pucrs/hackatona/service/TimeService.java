@@ -1,13 +1,12 @@
 package com.pucrs.hackatona.service;
 
 import com.pucrs.hackatona.beans.Nota;
-import com.pucrs.hackatona.beans.Usuario;
+import com.pucrs.hackatona.beans.UsuarioDTO;
 import com.pucrs.hackatona.beans.Time;
 import com.pucrs.hackatona.dao.TimeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,10 +16,10 @@ public class TimeService {
     @Autowired
     private TimeDao timeDao;
 
-    public boolean validateTime(List<Usuario> usuarios) {
-        for (Usuario usuario : usuarios)
-            for (Usuario usuarioToCompare : usuarios)
-                if (!usuario.getCurso().equals(usuarioToCompare.getCurso()))
+    public boolean validateTime(List<UsuarioDTO> usuarioDTOS) {
+        for (UsuarioDTO usuarioDTO : usuarioDTOS)
+            for (UsuarioDTO usuarioDTOToCompare : usuarioDTOS)
+                if (!usuarioDTO.getCurso().equals(usuarioDTOToCompare.getCurso()))
                     return true;
 
         return false;

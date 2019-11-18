@@ -1,7 +1,7 @@
 package com.pucrs.hackatona.service;
 
 import com.pucrs.hackatona.beans.LoginObject;
-import com.pucrs.hackatona.beans.Usuario;
+import com.pucrs.hackatona.beans.UsuarioDTO;
 import com.pucrs.hackatona.dao.UsuarioDAO;
 import com.pucrs.hackatona.enumerator.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +16,18 @@ public class UsuarioService {
     @Autowired
     private UsuarioDAO dao;
 
-    public List<Usuario> get() {
+    public List<UsuarioDTO> get() {
         return dao.get();
     }
 
-    public List<Usuario> getByNome(List<Usuario> list, String nome) {
+    public List<UsuarioDTO> getByNome(List<UsuarioDTO> list, String nome) {
         return list
                 .stream()
                 .filter(usuario -> usuario.isName(nome))
                 .collect(Collectors.toList());
     }
 
-    public List<Usuario> getByCurso(List<Usuario> list, String cursoName) throws IllegalArgumentException {
+    public List<UsuarioDTO> getByCurso(List<UsuarioDTO> list, String cursoName) throws IllegalArgumentException {
         Curso curso = Curso.valueOf(cursoName);
         return list
                 .stream()
@@ -36,7 +36,7 @@ public class UsuarioService {
     }
 
     public LoginObject confirmLogin(String matricula, String senha) throws IllegalArgumentException {
-        for (Usuario u : get()) {
+        for (UsuarioDTO u : get()) {
             if (u.isLogin(matricula, senha)) {
                 return new LoginObject(matricula, u.getIsAluno());
             }
@@ -44,21 +44,21 @@ public class UsuarioService {
         throw new IllegalArgumentException();
     }
 
-    public List<Usuario> getAlunos(List<Usuario> list) {
+    public List<UsuarioDTO> getAlunos(List<UsuarioDTO> list) {
         return list
                 .stream()
-                .filter(Usuario::getIsAluno)
+                .filter(UsuarioDTO::getIsAluno)
                 .collect(Collectors.toList());
     }
 
-    public List<Usuario> getProfessores(List<Usuario> list) {
+    public List<UsuarioDTO> getProfessores(List<UsuarioDTO> list) {
         return list
                 .stream()
-                .filter(Usuario::isProfessor)
+                .filter(UsuarioDTO::isProfessor)
                 .collect(Collectors.toList());
     }
 
-    public List<Usuario> getByMatricula(List<Usuario> list, String matricula) {
+    public List<UsuarioDTO> getByMatricula(List<UsuarioDTO> list, String matricula) {
         return list
                 .stream()
                 .filter(usuario -> usuario.isMatricula(matricula))
@@ -69,17 +69,17 @@ public class UsuarioService {
         return getByMatricula(get(), matricula).size() > 0;
     }
 
-    public boolean allUsuariosExist(List<Usuario> usuarios) {
-        for (Usuario usuario : usuarios) {
-            if (!existUsuario(usuario.getMatricula()))
+    public boolean allUsuariosExist(List<UsuarioDTO> usuarioDTOS) {
+        for (UsuarioDTO usuarioDTO : usuarioDTOS) {
+            if (!existUsuario(usuarioDTO.getMatricula()))
                 return false;
         }
         return true;
     }
 
-    public void createUsuario(Usuario usuario) {
-        if (!existUsuario(usuario.getMatricula())) {
-            dao.create(usuario);
+    public void createUsuario(UsuarioDTO usuarioDTO) {
+        if (!existUsuario(usuarioDTO.getMatricula())) {
+            dao.create(usuarioDTO);
         }else {
             throw new IllegalArgumentException();
         }

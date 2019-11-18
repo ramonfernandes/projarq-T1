@@ -3,16 +3,14 @@ package com.pucrs.hackatona.controller;
 import com.google.gson.Gson;
 import com.pucrs.hackatona.beans.Nota;
 import com.pucrs.hackatona.beans.Time;
-import com.pucrs.hackatona.beans.Usuario;
 import com.pucrs.hackatona.service.TimeService;
 import com.pucrs.hackatona.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/time")

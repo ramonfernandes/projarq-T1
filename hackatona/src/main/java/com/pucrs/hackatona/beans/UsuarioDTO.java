@@ -2,7 +2,7 @@ package com.pucrs.hackatona.beans;
 
 import com.pucrs.hackatona.enumerator.Curso;
 
-public class Usuario {
+public class UsuarioDTO {
 
     private String senha;
     private String matricula;
@@ -10,7 +10,7 @@ public class Usuario {
     private Curso curso;
     private Boolean isAluno;
 
-    public Usuario(String matricula, String senha, String nome, Curso curso, Boolean isAluno) {
+    public UsuarioDTO(String matricula, String senha, String nome, Curso curso, Boolean isAluno) {
         this.senha = senha;
         this.isAluno = isAluno;
         this.matricula = matricula;
