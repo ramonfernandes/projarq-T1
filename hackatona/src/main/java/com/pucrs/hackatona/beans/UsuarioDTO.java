@@ -10,6 +10,9 @@ public class UsuarioDTO {
     private Curso curso;
     private Boolean isAluno;
 
+    public UsuarioDTO() {
+    }
+
     public UsuarioDTO(String matricula, String senha, String nome, Curso curso, Boolean isAluno) {
         this.senha = senha;
         this.isAluno = isAluno;

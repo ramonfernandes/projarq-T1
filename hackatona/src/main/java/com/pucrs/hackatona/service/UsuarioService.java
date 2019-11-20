@@ -22,10 +22,24 @@ public class UsuarioService {
                 .map(usuario -> new UsuarioDTO(usuario.getNome(),
                         usuario.getSenha(),
                         usuario.getNome(),
-                        usuario.getCurso(),
+                        getCurso(usuario.getCurso()),
                         usuario.getAluno()))
                 .collect(Collectors.toList());
     }
+
+    private Curso getCurso(String curso) {
+      switch(curso) {
+          case "ES":
+              return Curso.ES;
+          case "CC":
+              return Curso.CC;
+          case "EC":
+              return Curso.EC;
+          case "SI":
+              return Curso.SI;
+      }
+      return Curso.ES;
+    };
 
     public List<UsuarioDTO> getByNome(List<UsuarioDTO> list, String nome) {
         return list
@@ -89,7 +103,7 @@ public class UsuarioService {
             dao.create(new UsuarioDAO.Builder()
                     .nome(usuarioDTO.getNome())
                     .senha(usuarioDTO.getSenha())
-                    .curso(usuarioDTO.getCurso())
+                    .curso(usuarioDTO.getCurso().name())
                     .matricula(usuarioDTO.getMatricula())
                     .isAluno(usuarioDTO.getIsAluno())
                     .build());

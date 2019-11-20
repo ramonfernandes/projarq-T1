@@ -11,7 +11,7 @@ public class UsuarioDAO {
     private String senha;
     private String matricula;
     private String nome;
-    private Curso curso;
+    private String curso;
     private Boolean isAluno;
 
     public UsuarioDAO(Builder builder) {
@@ -27,7 +27,7 @@ public class UsuarioDAO {
         private String senha;
         private String matricula;
         private String nome;
-        private Curso curso;
+        private String curso;
         private Boolean isAluno;
 
         public Builder senha(String senha) {
@@ -45,7 +45,7 @@ public class UsuarioDAO {
             return this;
         }
 
-        public Builder curso(Curso curso) {
+        public Builder curso(String curso) {
             this.curso = curso;
             return this;
         }
@@ -84,11 +84,11 @@ public class UsuarioDAO {
         this.nome = nome;
     }
 
-    public Curso getCurso() {
+    public String getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(String curso) {
         this.curso = curso;
     }
 

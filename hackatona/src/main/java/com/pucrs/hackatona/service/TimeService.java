@@ -25,38 +25,38 @@ public class TimeService {
         return false;
     }
 
-    public void createTeam(Time time) {
-        timeDao.createTeam(time);
-    }
-
-    public List<Time> getAll() {
-        return timeDao.getAll();
-    }
-
-    public Time getTeamById(Integer id) {
-        return timeDao.getAll().stream()
-                .filter(time -> time.getId() == id)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
-    }
-
-    public void updateTime(int id, Time time) {
-            Time oldTime = getTeamById(id);
-            timeDao.updateTime(oldTime, time);
-
-    }
-
-    public List<Time> getByMatriculas(List<String> matriculas){
-        List<Time> times = getAll();
-        for (String matricula : matriculas) {
-            times = times.stream()
-                    .filter(time -> time.containsMatricula(matricula))
-                    .collect(Collectors.toList());
-        }
-        return times;
-    }
-
-    public void updateNota(Time time, Nota nota) {
-        timeDao.updateNota(time, nota);
-    }
+//    public void createTeam(Time time) {
+//        timeDao.createTeam(time);
+//    }
+//
+//    public List<Time> getAll() {
+//        return timeDao.getAll();
+//    }
+//
+//    public Time getTeamById(Integer id) {
+//        return timeDao.getAll().stream()
+//                .filter(time -> time.getId() == id)
+//                .findFirst()
+//                .orElseThrow(IllegalArgumentException::new);
+//    }
+//
+//    public void updateTime(int id, Time time) {
+//            Time oldTime = getTeamById(id);
+//            timeDao.updateTime(oldTime, time);
+//
+//    }
+//
+//    public List<Time> getByMatriculas(List<String> matriculas){
+//        List<Time> times = getAll();
+//        for (String matricula : matriculas) {
+//            times = times.stream()
+//                    .filter(time -> time.containsMatricula(matricula))
+//                    .collect(Collectors.toList());
+//        }
+//        return times;
+//    }
+//
+//    public void updateNota(Time time, Nota nota) {
+//        timeDao.updateNota(time, nota);
+//    }
 }

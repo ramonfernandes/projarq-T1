@@ -23,8 +23,10 @@ repositories {
 }
 
 dependencies {
+    implementation 'javax.transaction:javax.transaction-api:1.2'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.code.gson:gson:2.7'
+    implementation 'mysql:mysql-connector-java:8.0.18'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
