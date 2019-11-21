@@ -1,7 +1,7 @@
 package com.pucrs.hackatona.dao;
 
 import com.pucrs.hackatona.beans.Nota;
-import com.pucrs.hackatona.beans.Time;
+import com.pucrs.hackatona.beans.TimeDTO;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 @Repository
 public class DAO {
-
 
     private String url = "jdbc:mysql://localhost:3307/db";
     private String user = "user";
@@ -31,26 +30,14 @@ public class DAO {
     }
 
 
-    public void createTeam(Time time) {
+    public void createTeam(TimeDTO timeDTO) {
+
     }
 
-    public List<Time> getAll() {
-        return new ArrayList<>();
-    }
+    public List<TimeDao> getAll() {
+        String sql = "SELECT * FROM db.time;";
 
-    public void updateTime(Time oldTime, Time newTime) {
-    }
-
-    public void updateNota(Time time, Nota nota) {
-    }
-
-    public List<UsuarioDAO> getUsuario() {
-
-        connect();
-
-        String sql = "select * from db.Aluno;";
-
-        List<UsuarioDAO> listDao = new ArrayList<>();
+        List<TimeDao> listDao = new ArrayList();
 
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -59,20 +46,32 @@ public class DAO {
 
             while (result.next()) {
                 listDao.add(
-                        new UsuarioDAO.Builder()
-                                .senha(result.getString("senha"))
-                                .curso(result.getString("curso"))
-                                .nome(result.getString("nome"))
-                                .matricula(result.getString("matricula"))
-                                .isAluno(result.getBoolean("isAluno"))
-                                .build()
-                );
+                        new TimeDao(result.getString("nome"),
+                                result.getInt("id"),
+                                result.getBoolean("isApproved"),
+                                result.getInt("funcionamento"),
+                                result.getInt("inovacao"),
+                                result.getInt("pitch"),
+                                result.getInt("processo"))
+                                    .setUsuarios(getByTimeId(result.getInt("id"))));
             }
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return listDao;
+    }
+
+    public void updateTime(TimeDTO oldTimeDTO, TimeDTO newTimeDTO) {
+    }
+
+    public void updateNota(TimeDTO timeDTO, Nota nota) {
+    }
+
+    public List<UsuarioDAO> getUsuario() {
+        String sql = "select * from db.Aluno;";
+
+        return getListOfUsuarioByQuery(sql);
 
     }
 
@@ -98,5 +97,42 @@ public class DAO {
         }
     }
 
+    public List<UsuarioDAO> getByTimeId(int id) {
+        String sql = "SELECT * FROM Aluno\n" +
+                "LEFT JOIN time_aluno\n" +
+                "ON Aluno.matricula = time_aluno.matricula\n" +
+                "LEFT JOIN time\n" +
+                "ON time_aluno.id_time = time.id WHERE time.id = " + id + ";";
+
+        return getListOfUsuarioByQuery(sql);
+    }
+
+    private List<UsuarioDAO> getListOfUsuarioByQuery(String sql) {
+        connect();
+
+        List<UsuarioDAO> listDao = new ArrayList<>();
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet result = stmt.executeQuery();
+
+
+            while (result.next()) {
+                listDao.add(
+                        new UsuarioDAO.Builder()
+                                .senha(result.getString("senha"))
+                                .curso(result.getString("curso"))
+                                .nome(result.getString("nome"))
+                                .matricula(result.getString("matricula"))
+                                .isAluno(result.getBoolean("isAluno"))
+                                .build()
+                );
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listDao;
+    }
 }
 

@@ -3,7 +3,7 @@ package com.pucrs.hackatona.beans;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Time {
+public class TimeDTO {
 
 
     private int id;
@@ -15,7 +15,7 @@ public class Time {
 
     private boolean isApproved;
 
-    public Time(String nome, List<UsuarioDTO> alunos) {
+    public TimeDTO(String nome, List<UsuarioDTO> alunos) {
         this.id = idAux;
         this.nome = nome;
         this.alunos = alunos;
@@ -36,7 +36,7 @@ public class Time {
     }
 
     public static void setIdAux(int idAux) {
-        Time.idAux = idAux;
+        TimeDTO.idAux = idAux;
     }
 
     public List<UsuarioDTO> getAlunos() {
@@ -65,7 +65,7 @@ public class Time {
         isApproved = approved;
     }
 
-    public Time setNota(Nota nota) {
+    public TimeDTO setNota(Nota nota) {
         this.nota = nota;
         return this;
     }

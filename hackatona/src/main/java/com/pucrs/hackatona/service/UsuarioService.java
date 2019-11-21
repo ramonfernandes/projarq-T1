@@ -19,12 +19,16 @@ public class UsuarioService {
 
     public List<UsuarioDTO> getUsuario() {
         return dao.getUsuario().stream()
-                .map(usuario -> new UsuarioDTO(usuario.getNome(),
-                        usuario.getSenha(),
-                        usuario.getNome(),
-                        getCurso(usuario.getCurso()),
-                        usuario.getAluno()))
+                .map(usuario -> getUsuarioDTO(usuario))
                 .collect(Collectors.toList());
+    }
+
+    public UsuarioDTO getUsuarioDTO(UsuarioDAO usuario) {
+        return new UsuarioDTO(usuario.getNome(),
+                usuario.getSenha(),
+                usuario.getNome(),
+                getCurso(usuario.getCurso()),
+                usuario.getAluno());
     }
 
     private Curso getCurso(String curso) {
