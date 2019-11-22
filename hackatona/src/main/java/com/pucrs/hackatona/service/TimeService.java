@@ -4,6 +4,7 @@ import com.pucrs.hackatona.beans.Nota;
 import com.pucrs.hackatona.beans.UsuarioDTO;
 import com.pucrs.hackatona.beans.TimeDTO;
 import com.pucrs.hackatona.dao.DAO;
+import com.pucrs.hackatona.dao.TimeDao;
 import com.pucrs.hackatona.dao.UsuarioDAO;
 import com.pucrs.hackatona.enumerator.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class TimeService {
     }
 
     public void createTeam(TimeDTO timeDTO) {
-        dao.createTeam(timeDTO);
+        dao.createTeam(convertDTOtoDAO(timeDTO));
     }
 
     public List<TimeDTO> getAll() {
@@ -51,9 +52,15 @@ public class TimeService {
     }
 
     public void updateTime(int id, TimeDTO timeDTO) {
-        TimeDTO oldTimeDTO = getTeamById(id);
-        dao.updateTime(oldTimeDTO, timeDTO);
+        dao.updateTime(id, convertDTOtoDAO(timeDTO));
+    }
 
+    public TimeDao convertDTOtoDAO (TimeDTO timeDTO) {
+        return new TimeDao(timeDTO.getNome(), timeDTO.getId(), timeDTO.isApproved(),
+                timeDTO.getNota().getFuncionamento(),
+                timeDTO.getNota().getInovacao(),
+                timeDTO.getNota().getPitch(),
+                timeDTO.getNota().getProcesso());
     }
 
     public List<TimeDTO> getByMatriculas(List<String> matriculas) {
@@ -67,7 +74,8 @@ public class TimeService {
     }
 
     public void updateNota(TimeDTO timeDTO, Nota nota) {
-        dao.updateNota(timeDTO, nota);
+        timeDTO.setNota(nota);
+        dao.updateTime(timeDTO.getId(), convertDTOtoDAO(timeDTO));
     }
 
     public UsuarioDTO getUsuarioDTO(UsuarioDAO usuario) {

@@ -2,6 +2,7 @@ package com.pucrs.hackatona.dao;
 
 import com.pucrs.hackatona.beans.Nota;
 import com.pucrs.hackatona.beans.TimeDTO;
+import com.pucrs.hackatona.beans.UsuarioDTO;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +31,23 @@ public class DAO {
     }
 
 
-    public void createTeam(TimeDTO timeDTO) {
+    public void createTeam(TimeDao time) {
+        String sql = "INSERT INTO db.time (id, nome , isApproved, funcionamento, inovacao, pitch, processo) " +
+                "values (" + time.getId() + ", " + time.getNome() + ", " + time.isApproved() +
+                "," + time.getFuncionamento() +
+                "," + time.getInovacao() +
+                "," + time.getPitch() +
+                "," + time.getProcesso() +
+                ");";
 
+        executeNonReturnQuery(sql);
+
+        for (UsuarioDAO usuario : time.getUsuarios()) {
+            sql = "INSERT INTO db time_aluno (matricula, id_time) VALUES " +
+                    usuario.getMatricula() + ", " + time.getId() + ");";
+
+            executeNonReturnQuery(sql);
+        }
     }
 
     public List<TimeDao> getAll() {
@@ -53,7 +69,7 @@ public class DAO {
                                 result.getInt("inovacao"),
                                 result.getInt("pitch"),
                                 result.getInt("processo"))
-                                    .setUsuarios(getByTimeId(result.getInt("id"))));
+                                .setUsuarios(getByTimeId(result.getInt("id"))));
             }
             conn.close();
         } catch (SQLException e) {
@@ -62,10 +78,10 @@ public class DAO {
         return listDao;
     }
 
-    public void updateTime(TimeDTO oldTimeDTO, TimeDTO newTimeDTO) {
-    }
-
-    public void updateNota(TimeDTO timeDTO, Nota nota) {
+    public void updateTime(int id, TimeDao newTime) {
+        String sql = "DELETE FROM db.time WHERE id = " + id + ";";
+        executeNonReturnQuery(sql);
+        createTeam(newTime);
     }
 
     public List<UsuarioDAO> getUsuario() {
@@ -88,13 +104,7 @@ public class DAO {
                 usuario.getCurso() + "\'," +
                 usuario.getAluno() + ");";
 
-        try {
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.execute();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executeNonReturnQuery(sql);
     }
 
     public List<UsuarioDAO> getByTimeId(int id) {
@@ -116,7 +126,6 @@ public class DAO {
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet result = stmt.executeQuery();
 
-
             while (result.next()) {
                 listDao.add(
                         new UsuarioDAO.Builder()
@@ -133,6 +142,16 @@ public class DAO {
             e.printStackTrace();
         }
         return listDao;
+    }
+
+    private void executeNonReturnQuery(String sql) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.execute();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 
