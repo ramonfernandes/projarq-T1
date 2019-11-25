@@ -9,6 +9,9 @@ public class Nota {
     private int time;
     private int timeId;
 
+    public Nota() {
+    }
+
     public Nota(int funcionamento, int inovacao, int pitch, int processo, int time, int timeId) {
         this.funcionamento = funcionamento;
         this.inovacao = inovacao;

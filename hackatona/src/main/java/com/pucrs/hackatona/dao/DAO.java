@@ -33,26 +33,22 @@ public class DAO {
 
     public void createTeam(TimeDao time) {
         String sql = "INSERT INTO db.time (id, nome , isApproved, funcionamento, inovacao, pitch, processo) " +
-                "values (" + time.getId() + ", " + time.getNome() + ", " + time.isApproved() +
-                "," + time.getFuncionamento() +
-                "," + time.getInovacao() +
-                "," + time.getPitch() +
-                "," + time.getProcesso() +
-                ");";
+                "values (" + time.getId() + ", '" + time.getNome() + "', " + time.isApproved() + ", 0, 0, 0, 0);";
 
         executeNonReturnQuery(sql);
 
-        for (UsuarioDAO usuario : time.getUsuarios()) {
-            sql = "INSERT INTO db time_aluno (matricula, id_time) VALUES " +
-                    usuario.getMatricula() + ", " + time.getId() + ");";
+        if (time.getUsuarios() != null)
+            for (UsuarioDAO usuario : time.getUsuarios()) {
+                sql = "INSERT INTO db.time_aluno (matricula, id_time) VALUES (" +
+                        usuario.getMatricula() + ", " + time.getId() + ");";
 
-            executeNonReturnQuery(sql);
-        }
+                executeNonReturnQuery(sql);
+            }
     }
 
     public List<TimeDao> getAll() {
         String sql = "SELECT * FROM db.time;";
-
+        connect();
         List<TimeDao> listDao = new ArrayList();
 
         try {
@@ -62,8 +58,9 @@ public class DAO {
 
             while (result.next()) {
                 listDao.add(
-                        new TimeDao(result.getString("nome"),
+                        new TimeDao(
                                 result.getInt("id"),
+                                result.getString("nome"),
                                 result.getBoolean("isApproved"),
                                 result.getInt("funcionamento"),
                                 result.getInt("inovacao"),
@@ -79,18 +76,37 @@ public class DAO {
     }
 
     public void updateTime(int id, TimeDao newTime) {
-        String sql = "DELETE FROM db.time WHERE id = " + id + ";";
+        String sql = "UPDATE db.time SET " +
+                "nome = '" + newTime.getNome() + "', " +
+                "isApproved = " + (newTime.isApproved() ? 1 : 0) + ", " +
+                "funcionamento = " + newTime.getFuncionamento() + ", " +
+                "inovacao = " + newTime.getInovacao() + ", " +
+                "pitch = " + newTime.getPitch() + ", " +
+                "processo = " + newTime.getProcesso() + " WHERE id = " + id + ";";
         executeNonReturnQuery(sql);
-        createTeam(newTime);
     }
 
     public List<UsuarioDAO> getUsuario() {
         String sql = "select * from db.Aluno;";
 
         return getListOfUsuarioByQuery(sql);
-
     }
 
+    public int getBiggerID() {
+        int count = 0;
+        try {
+            String sql = "select count(*) from db.time;";
+            connect();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            count = Integer.parseInt(rs.getString(1));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 
     public void create(UsuarioDAO usuario) {
         connect();
@@ -145,6 +161,7 @@ public class DAO {
     }
 
     private void executeNonReturnQuery(String sql) {
+        connect();
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.execute();

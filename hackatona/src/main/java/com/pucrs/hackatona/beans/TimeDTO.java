@@ -1,6 +1,7 @@
 package com.pucrs.hackatona.beans;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TimeDTO {
@@ -8,35 +9,25 @@ public class TimeDTO {
 
     private int id;
 
-    private static int idAux = 0;
     private String nome;
     private List<UsuarioDTO> alunos;
     private Nota nota;
 
     private boolean isApproved;
 
-    public TimeDTO(String nome, List<UsuarioDTO> alunos) {
-        this.id = idAux;
-        this.nome = nome;
-        this.alunos = alunos;
-        this.isApproved = false;
-        idAux++;
+    public TimeDTO() {
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public TimeDTO(String nome, List<UsuarioDTO> alunos, int id, Nota nota) {
+        this.nome = nome;
+        this.alunos = alunos;
+        this.isApproved = false;
         this.id = id;
-    }
-
-    public static int getIdAux() {
-        return idAux;
-    }
-
-    public static void setIdAux(int idAux) {
-        TimeDTO.idAux = idAux;
+        this.nota = nota;
     }
 
     public List<UsuarioDTO> getAlunos() {

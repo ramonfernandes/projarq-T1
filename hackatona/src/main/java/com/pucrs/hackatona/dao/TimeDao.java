@@ -1,6 +1,7 @@
 package com.pucrs.hackatona.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 public class TimeDao {
 
@@ -11,24 +12,31 @@ public class TimeDao {
     private int inovacao;
     private int pitch;
     private int processo;
+    private List<UsuarioDAO> usuarios;
+
+    public TimeDao(String nome, boolean approved, int id) {
+        this.nome = nome;
+        this.isApproved = isApproved;
+        this.id = id;
+    }
 
     public TimeDao setUsuarios(List<UsuarioDAO> usuarios) {
         this.usuarios = usuarios;
         return this;
-    }
+    };
 
-    private List<UsuarioDAO> usuarios;
+    public TimeDao(int id, String nome, boolean isApproved, int funcionamento, int inovacao, int pitch, int processo) {
+        this.nome = nome;
+        this.isApproved = isApproved;
+        this.funcionamento = funcionamento;
+        this.inovacao = inovacao;
+        this.pitch = pitch;
+        this.processo = processo;
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public boolean isApproved() {
@@ -75,17 +83,15 @@ public class TimeDao {
         return usuarios;
     }
 
-    public TimeDao(String nome, int id, boolean isApproved, int funcionamento, int inovacao, int pitch, int processo) {
+    public void setNome(String nome) {
         this.nome = nome;
-        this.id = id;
-        this.isApproved = isApproved;
-        this.funcionamento = funcionamento;
-        this.inovacao = inovacao;
-        this.pitch = pitch;
-        this.processo = processo;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

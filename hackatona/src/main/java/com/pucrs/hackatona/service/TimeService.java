@@ -10,6 +10,7 @@ import com.pucrs.hackatona.enumerator.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -30,7 +31,25 @@ public class TimeService {
     }
 
     public void createTeam(TimeDTO timeDTO) {
-        dao.createTeam(convertDTOtoDAO(timeDTO));
+        TimeDao timeDao = convertDTOtoDAO(timeDTO);
+        timeDao = timeDao.setUsuarios(convertAlunos(timeDTO.getAlunos()));
+        dao.createTeam(timeDao);
+    }
+
+    private List<UsuarioDAO> convertAlunos(List<UsuarioDTO> alunos) {
+        List<UsuarioDAO> usuarioDAOS = new ArrayList<>();
+
+        for (UsuarioDTO usuario : alunos) {
+            usuarioDAOS.add(
+                    new UsuarioDAO.Builder()
+                            .isAluno(usuario.getIsAluno())
+                            .matricula(usuario.getMatricula())
+                            .nome(usuario.getNome())
+                            .curso(usuario.getCurso().name())
+                            .senha(usuario.getSenha())
+                            .build());
+        }
+        return usuarioDAOS;
     }
 
     public List<TimeDTO> getAll() {
@@ -40,7 +59,16 @@ public class TimeService {
                         dao.getByTimeId(timeDao.getId())
                                 .stream()
                                 .map(this::getUsuarioDTO)
-                                .collect(Collectors.toList()))).collect(Collectors.toList());
+                                .collect(Collectors.toList()),
+                        timeDao.getId(),
+                        new Nota(
+                                timeDao.getFuncionamento(),
+                                timeDao.getInovacao(),
+                                timeDao.getPitch(),
+                                timeDao.getProcesso(),
+                                timeDao.getInovacao(),
+                                timeDao.getId())))
+                .collect(Collectors.toList());
     }
 
     public TimeDTO getTeamById(Integer id) {
@@ -55,12 +83,17 @@ public class TimeService {
         dao.updateTime(id, convertDTOtoDAO(timeDTO));
     }
 
-    public TimeDao convertDTOtoDAO (TimeDTO timeDTO) {
-        return new TimeDao(timeDTO.getNome(), timeDTO.getId(), timeDTO.isApproved(),
-                timeDTO.getNota().getFuncionamento(),
-                timeDTO.getNota().getInovacao(),
-                timeDTO.getNota().getPitch(),
-                timeDTO.getNota().getProcesso());
+    public TimeDao convertDTOtoDAO(TimeDTO timeDTO) {
+        if (timeDTO.getNota() != null)
+            return new TimeDao(dao.getBiggerID(),
+                    timeDTO.getNome(),
+                    timeDTO.isApproved(),
+                    timeDTO.getNota().getFuncionamento(),
+                    timeDTO.getNota().getInovacao(),
+                    timeDTO.getNota().getPitch(),
+                    timeDTO.getNota().getProcesso());
+        else
+            return new TimeDao(timeDTO.getNome(), timeDTO.isApproved(), dao.getBiggerID());
     }
 
     public List<TimeDTO> getByMatriculas(List<String> matriculas) {

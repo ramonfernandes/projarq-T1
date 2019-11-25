@@ -24,7 +24,7 @@ public class UsuarioService {
     }
 
     public UsuarioDTO getUsuarioDTO(UsuarioDAO usuario) {
-        return new UsuarioDTO(usuario.getNome(),
+        return new UsuarioDTO(usuario.getMatricula(),
                 usuario.getSenha(),
                 usuario.getNome(),
                 getCurso(usuario.getCurso()),
